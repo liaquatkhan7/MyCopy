@@ -41,7 +41,7 @@ var styles = StyleSheet.create({
 
 export const RecNavi = StackNavigator({
     Home:{ screen: MainScreenNavigator },
-    Camerarol: { screen: Camerarol }
+    Camerarol: { screen: Camerarol },
     },
     {headerMode: 'none'}
 )
