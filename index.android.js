@@ -10,6 +10,7 @@ import {StackNavigator, NavigationActions, TabNavigator } from 'react-navigation
 import Splash from './component/splash.js';
 import Main from './component/main.js';
 import Camerarol from './component/camera.js';
+import Croping from './component/cropingimage.js';
 
 class MainScreenNavigator extends Component {
   constructor(){
@@ -42,6 +43,7 @@ var styles = StyleSheet.create({
 export const RecNavi = StackNavigator({
     Home:{ screen: MainScreenNavigator },
     Camerarol: { screen: Camerarol },
+    Croping: { screen: Croping}
     },
     {headerMode: 'none'}
 )

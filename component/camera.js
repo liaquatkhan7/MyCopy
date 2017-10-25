@@ -1,195 +1,200 @@
-// import React, {Component} from 'react';
-// import {Text, 
-//         View, 
-//         TouchableOpacity, 
-//         StyleSheet, 
-//         Dimensions,
-//         Image} from 'react-native';
+import React, {Component} from 'react';
+import {Text, 
+        View, 
+        TouchableOpacity, 
+        StyleSheet, 
+        Dimensions,
+        Image,
+        TouchableHighlight} from 'react-native';
 
-// import Camera from 'react-native-camera';
+import Camera from 'react-native-camera';
 
-// const {width, height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-// export default class Camerarol extends Component {
-//     render(){
-//         return (
-//                 <Camera
-//                     ref={(cam) => {
-//                         this.camera = cam;
-//                     }}
-//                     style={styles.preview}
-//                     aspect={Camera.constants.Aspect.fill}>
-//                     <Text 
-//                         style={styles.capture} 
-//                         onPress={this.takePicture.bind(this)}> [CAPTURE] </Text>
-//                 </Camera>
-//         )
-//     }
-//     takePicture() {
-//         // const options = {};
-//         // options.location = Mycopy
-//         this.camera.capture()
-//             .then((data) => console.log(data))
-//             .catch(err => console.error(err, 'its error'));
-//       }
-// }
+export default class Camerarol extends Component {
+    render(){
+        return (
+                <Camera
+                    ref={(cam) => {
+                        this.camera = cam;
+                    }}
+                    style={styles.preview}
+                    aspect={Camera.constants.Aspect.fill}>
+                    
+                    <TouchableHighlight
+                        style={styles.capture}
+                        onPress={this.takePicture.bind(this)}
+                        underlayColor="rgba(255, 255, 255, 0.5)">
+                        <View />
+                    </TouchableHighlight>
+                </Camera>
+        )
+    }
+    takePicture() {
+        const options = {};
+        // options.location = 'Mycopy'
+        this.camera.capture()
+            .then((data) => this.props.navigation.navigate('Croping', { img: data.path }))
+            .catch(err => console.error(err, 'its error'));
+      }
+}
 
-// const styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       flexDirection: 'row',
-//     },
-//     preview: {
-//       flex: 1,
-//       justifyContent: 'flex-end',
-//       alignItems: 'center'
-//     },
-//     capture: {
-//       flex: 0,
-//       backgroundColor: '#fff',
-//       borderRadius: 5,
-//       color: '#000',
-//       padding: 10,
-//       margin: 40
-//     }
-//   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  import React, { Component } from 'react';
-  import {
-    View,
-    StyleSheet,
-    Dimensions,
-    TouchableHighlight,
-    Image,
-    Text,
-  } from 'react-native';
-  import Camera from 'react-native-camera';
-  
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#000',
+      flexDirection: 'row',
     },
     preview: {
       flex: 1,
       justifyContent: 'flex-end',
-      alignItems: 'center',
-      height: Dimensions.get('window').height,
-      width: Dimensions.get('window').width
+      alignItems: 'center'
     },
     capture: {
-      width: 70,
-      height: 70,
-      borderRadius: 35,
-      borderWidth: 5,
-      borderColor: '#FFF',
-      marginBottom: 15,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        borderWidth: 5,
+        borderColor: '#FFF',
+        marginBottom: 15,
     },
-    cancel: {
-      position: 'absolute',
-      right: 20,
-      top: 20,
-      backgroundColor: 'transparent',
-      color: '#FFF',
-      fontWeight: '600',
-      fontSize: 17,
-    }
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   import React, { Component } from 'react';
+//   import {
+//     View,
+//     StyleSheet,
+//     Dimensions,
+//     TouchableHighlight,
+//     Image,
+//     Text,
+//   } from 'react-native';
+//   import Camera from 'react-native-camera';
   
-  class Camerarol extends Component {
-    constructor(props) {
-      super(props);
+//   const styles = StyleSheet.create({
+//     container: {
+//       flex: 1,
+//       alignItems: 'center',
+//       justifyContent: 'center',
+//       backgroundColor: '#000',
+//     },
+//     preview: {
+//       flex: 1,
+//       justifyContent: 'flex-end',
+//       alignItems: 'center',
+//       height: Dimensions.get('window').height,
+//       width: Dimensions.get('window').width
+//     },
+//     capture: {
+//       width: 70,
+//       height: 70,
+//       borderRadius: 35,
+//       borderWidth: 5,
+//       borderColor: '#FFF',
+//       marginBottom: 15,
+//     },
+//     cancel: {
+//       position: 'absolute',
+//       right: 20,
+//       top: 20,
+//       backgroundColor: 'transparent',
+//       color: '#FFF',
+//       fontWeight: '600',
+//       fontSize: 17,
+//     }
+//   });
   
-      this.state = {
-        path: null,
-      };
-    }
+//   class Camerarol extends Component {
+//     constructor(props) {
+//       super(props);
   
-    takePicture() {
-      this.camera.capture()
-        .then((data) => {
-          alert(data);
-          this.setState({ path: data.path })
-        })
-        .catch(err => console.error(err));
-    }
+//       this.state = {
+//         path: null,
+//       };
+//     }
   
-    renderCamera() {
-      return (
-        <Camera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}
-          captureTarget={Camera.constants.CaptureTarget.disk}
-        >
-          <TouchableHighlight
-            style={styles.capture}
-            onPress={this.takePicture.bind(this)}
-            underlayColor="rgba(255, 255, 255, 0.5)"
-          >
-            <View />
-          </TouchableHighlight>
-        </Camera>
-      );
-    }
+//     takePicture() {
+//       this.camera.capture()
+//         .then((data) => {
+//           alert(data);
+//           this.setState({ path: data.path })
+//         })
+//         .catch(err => console.error(err));
+//     }
   
-    renderImage() {
-      return (
-        <View>
-          <Image
-            source={{ uri: this.state.path }}
-            style={styles.preview}
-          />
-          <Text
-            style={styles.cancel}
-            onPress={() => this.setState({ path: null })}
-          >Cancel
-          </Text>
-        </View>
-      );
-    }
+//     renderCamera() {
+//       return (
+//         <Camera
+//           ref={(cam) => {
+//             this.camera = cam;
+//           }}
+//           style={styles.preview}
+//           aspect={Camera.constants.Aspect.fill}
+//           captureTarget={Camera.constants.CaptureTarget.disk}
+//         >
+//           <TouchableHighlight
+//             style={styles.capture}
+//             onPress={this.takePicture.bind(this)}
+//             underlayColor="rgba(255, 255, 255, 0.5)"
+//           >
+//             <View />
+//           </TouchableHighlight>
+//         </Camera>
+//       );
+//     }
   
-    render() {
-      return (
-        <View style={styles.container}>
-          {this.state.path ? this.renderImage() : this.renderCamera()}
-        </View>
-      );
-    }
-  };
+//     renderImage() {
+//       return (
+//         <View>
+//           <Image
+//             source={{ uri: this.state.path }}
+//             style={styles.preview}
+//           />
+//           <Text
+//             style={styles.cancel}
+//             onPress={() => this.setState({ path: null })}
+//           >Cancel
+//           </Text>
+//         </View>
+//       );
+//     }
   
-  export default Camerarol;
+//     render() {
+//       return (
+//         <View style={styles.container}>
+//           {this.state.path ? this.renderImage() : this.renderCamera()}
+//         </View>
+//       );
+//     }
+//   };
+  
+//   export default Camerarol;
