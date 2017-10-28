@@ -8,20 +8,20 @@ export default class Croping extends Component {
     cropingImg(){
         const {state} = this.props.navigation;
         let imgAdress = state.params.img 
-        console.log(imgAdress)
         ImagePicker.openCropper({
             path: imgAdress,
             width: 400,
             height: 400
-          }).then(image => {
-            console.log(image.path, 'insight the picker');
-            alert(image.path)
+          }).then(image => {            
+            alert(image.path);
+            this.props.navigation.navigate('ShareAndLogo', { imagePath: image.path })
           }).catch( err => this.props.navigation.navigate('Camerarol'));
     }
     render(){
-        return (<View>
-                    {this.cropingImg()}
-                </View>
+         return ( <View>
+                     {this.cropingImg()} 
+                 </View>
+                
                 )
     }
 }

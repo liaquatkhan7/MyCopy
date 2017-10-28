@@ -11,6 +11,7 @@ import Splash from './component/splash.js';
 import Main from './component/main.js';
 import Camerarol from './component/camera.js';
 import Croping from './component/cropingimage.js';
+import ShareAndLogo from './component/shareandlogo.js';
 
 class MainScreenNavigator extends Component {
   constructor(){
@@ -43,7 +44,8 @@ var styles = StyleSheet.create({
 export const RecNavi = StackNavigator({
     Home:{ screen: MainScreenNavigator },
     Camerarol: { screen: Camerarol },
-    Croping: { screen: Croping}
+    Croping: { screen: Croping},
+    ShareAndLogo: {screen: ShareAndLogo}
     },
     {headerMode: 'none'}
 )
