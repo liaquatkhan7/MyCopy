@@ -42,12 +42,20 @@ var styles = StyleSheet.create({
 });
 
 export const RecNavi = StackNavigator({
-    Home:{ screen: MainScreenNavigator },
-    Camerarol: { screen: Camerarol },
+    Home:{ screen: MainScreenNavigator,
+      navigationOptions: ({navigation}) => ({
+        header: false
+      })
+    },
+    Camerarol: { screen: Camerarol,
+      navigationOptions: ({navigation}) => ({
+        header: false
+    })
+    },
     Croping: { screen: Croping},
     ShareAndLogo: {screen: ShareAndLogo}
     },
-    {headerMode: 'none'}
+    
 )
 
 AppRegistry.registerComponent('RecNavi', () => RecNavi)

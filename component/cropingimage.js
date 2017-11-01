@@ -13,15 +13,12 @@ export default class Croping extends Component {
             width: 400,
             height: 400
           }).then(image => {            
-            alert(image.path);
             this.props.navigation.navigate('ShareAndLogo', { imagePath: image.path })
           }).catch( err => this.props.navigation.navigate('Camerarol'));
     }
     render(){
          return ( <View>
                      {this.cropingImg()} 
-                 </View>
-                
-                )
+                 </View>)
     }
 }
