@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, Button, Image, Dimensions} from 'react-native';
-
+import {
+    Text, 
+    View, 
+    TouchableOpacity, 
+    StyleSheet, 
+    Button, 
+    Image, 
+    Dimensions, 
+    TouchableHighlight,
+    ScrollView
+} from 'react-native';
+import Canvas from 'react-native-canvas';
 var ImagePicker = require('react-native-image-picker');
 
 const {width, height} = Dimensions.get('window');
@@ -23,18 +33,20 @@ export default class ShareAndLogo extends Component {
             color: 'black',
             fontSize: 14,
             fontWeight: 'normal',
-            marginLeft: 200
+            marginLeft: width*.6
          },
     });
+
     constructor(){
         super()
         this.state = {
             SeletedLogo: false,
             logoUrl: '',
-            avatarSource: ''
-
+            avatarSource: '',
+            logoPosition: ''
         }
     }
+
     alr(){
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
@@ -59,28 +71,117 @@ export default class ShareAndLogo extends Component {
               });
             }
           });
-        
     }
+
+    selectPosition(pos){
+        this.setState({
+            logoPosition: pos
+        })
+    }
+    
+    placelogo(){
+                {switch(this.state.logoPosition) {
+                    case '':
+                        return( <Image 
+                            source={this.state.avatarSource} 
+                            style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} /> )
+                        break;
+                    case 'topleft':
+                        return( <Image 
+                            source={this.state.avatarSource} 
+                            style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} />)
+                        break;
+                    case 'topright':
+                        return( <Image 
+                            source={this.state.avatarSource} 
+                            style={{width: 80, height: 80, position:'absolute', top: 20, left: 240}} />)
+                    break;
+                    case 'bottomleft':
+                        return(<Image 
+                            source={this.state.avatarSource} 
+                            style={{width: 80, height: 80, position:'absolute', top: 300, left: 20}} />)
+                    break;
+                    case 'bottomright':
+                        return(<Image 
+                            source={this.state.avatarSource} 
+                            style={{width: 80, height: 80, position:'absolute', top: 300, left: 240}} />)
+                    default:
+                        alert('please select a picture first')
+                }}
+    }
+    done(e){
+        alert('connected');
+        // handleCanvas = (canvas) => {
+        //     const ctx = canvas.getContext('2d');
+        //     ctx.fillStyle = 'purple';
+        //     ctx.moveTo(0,0);
+        //     ctx.lineTo(200,100);
+        //     ctx.stroke();
+            
+        // }
+    }
+
+    
     
     render(){
         const {state} = this.props.navigation;
         let imageAdress = state.params.imagePath;
         return(
+            <ScrollView contentContainerStyle={styles.contentContainer}>
+            
             <View style={{marginTop: 5}}>
                 <View style={{position:'relative'}}>
                     <Image
                         style={{width: width, height: height*.7}}
                         source={{ uri: imageAdress }} />
-                    <Image 
+                    
+                    <TouchableHighlight 
+                        onPress={this.selectPosition.bind(this,'topleft')}
+                        style={{position: 'absolute', top: 20, left: 20, padding:50, width: width*.5, height: 50}}>
+                        <Text></Text>
+                    </TouchableHighlight>
+                        
+                    <TouchableHighlight 
+                        onPress={this.selectPosition.bind(this,'topright')}
+                        style={{position: 'absolute', top: 20, left: 240, padding: 50, width: width*.5, height: 50}}>
+                        <Text></Text>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight 
+                        onPress={this.selectPosition.bind(this,'bottomleft')}
+                        style={{position: 'absolute', top: 300, left: 0, padding:50, paddingLeft:30, width: width*.5, height: 50}}>
+                        <Text></Text>
+                    </TouchableHighlight >
+
+                    <TouchableHighlight 
+                        onPress={this.selectPosition.bind(this,'bottomright')}
+                        style={{position: 'absolute', top: 300, left: 240, padding: 50, width: width*.5, height: 50}}>
+                        <Text></Text>
+                    </TouchableHighlight>
+                    
+                    {this.placelogo()}
+
+                    {/* <Image 
                         source={this.state.avatarSource} 
-                        style={{width: 30, height: 30, position:'absolute'}} />
+                        style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} /> */}
+                
                 </View>
+                
                 <TouchableOpacity
                     onPress={this.alr.bind(this)}
                     style={{alignItems: 'center'}}>
                     <Text style={styles.btn}>Select Logo</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={this.done.bind(this)}
+                    style={{alignItems: 'center'}}>
+                    <Text style={styles.btn}>Done</Text>
+                </TouchableOpacity>
+
+                {/* <Canvas ref={this.handleCanvas}/>  */}
             </View>
+            </ScrollView>
         )
 
 }}
@@ -95,5 +196,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 5,
         padding: 20
-    }
+    },
+    contentContainer: {
+        paddingVertical: 20
+      }
 })
