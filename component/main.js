@@ -1,11 +1,60 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, Button, Image, Dimensions} from 'react-native';
-  
+import {
+    Text, 
+    View, 
+    TouchableOpacity, 
+    StyleSheet, 
+    Button, 
+    Image, 
+    Dimensions
+} from 'react-native';
 // import Camera from 'react-native-camera';
+
+var ImagePicker = require('react-native-image-picker');
 
 const {width, height} = Dimensions.get('window');
 
+var options = {
+    title: 'Select Avatar',
+    storageOptions: {
+      skipBackup: true,
+      path: 'images'
+    },
+    takePhotoButtonTitle: null
+};
+
 export default class Main extends Component {
+    constructor(){
+        super();
+        this.state = {
+            avatarSource: ''
+        }
+    }
+    
+    galaryOpen(){
+        alert('Dude i am connected hip hip hurray')
+        
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+          
+            if (response.didCancel) {
+              console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+              let source = { uri: response.uri };
+              this.setState({
+                avatarSource: source
+              });
+            //   this.props.navigation.navigate('Croping', { img: source })
+            }
+        });
+    }
     render(){
         // const { navigate } = this.props.navigation;
         return (
@@ -23,7 +72,7 @@ export default class Main extends Component {
                 <Text>-------------------------------</Text>
 
                 <TouchableOpacity
-                    onPress={(user) =>  this.props.navigation.navigate('Galary')} >
+                    onPress={this.galaryOpen.bind(this)}>
                     <Image
                         style={{width: 80, height: 80, marginLeft: 30}}
                         source={require('../asset/galarryicon.png')}

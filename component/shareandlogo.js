@@ -10,7 +10,10 @@ import {
     TouchableHighlight,
     ScrollView
 } from 'react-native';
-import Canvas from 'react-native-canvas';
+import ViewShot from "react-native-view-shot";
+import { captureRef } from "react-native-view-shot";
+// import Canvas from 'react-native-canvas';
+
 var ImagePicker = require('react-native-image-picker');
 
 const {width, height} = Dimensions.get('window');
@@ -43,11 +46,12 @@ export default class ShareAndLogo extends Component {
             SeletedLogo: false,
             logoUrl: '',
             avatarSource: '',
-            logoPosition: ''
+            logoPosition: '',
+            finalImageUrl:''
         }
     }
 
-    alr(){
+    slectLogo(){
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
           
@@ -62,10 +66,6 @@ export default class ShareAndLogo extends Component {
             }
             else {
               let source = { uri: response.uri };
-          
-              // You can also display the image using data:
-              // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-          
               this.setState({
                 avatarSource: source
               });
@@ -80,56 +80,57 @@ export default class ShareAndLogo extends Component {
     }
     
     placelogo(){
-                {switch(this.state.logoPosition) {
-                    case '':
-                        return( <Image 
-                            source={this.state.avatarSource} 
-                            style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} /> )
-                        break;
-                    case 'topleft':
-                        return( <Image 
-                            source={this.state.avatarSource} 
-                            style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} />)
-                        break;
-                    case 'topright':
-                        return( <Image 
-                            source={this.state.avatarSource} 
-                            style={{width: 80, height: 80, position:'absolute', top: 20, left: 240}} />)
-                    break;
-                    case 'bottomleft':
-                        return(<Image 
-                            source={this.state.avatarSource} 
-                            style={{width: 80, height: 80, position:'absolute', top: 300, left: 20}} />)
-                    break;
-                    case 'bottomright':
-                        return(<Image 
-                            source={this.state.avatarSource} 
-                            style={{width: 80, height: 80, position:'absolute', top: 300, left: 240}} />)
-                    default:
-                        alert('please select a picture first')
-                }}
-    }
-    done(e){
-        alert('connected');
-        // handleCanvas = (canvas) => {
-        //     const ctx = canvas.getContext('2d');
-        //     ctx.fillStyle = 'purple';
-        //     ctx.moveTo(0,0);
-        //     ctx.lineTo(200,100);
-        //     ctx.stroke();
-            
-        // }
+        {switch(this.state.logoPosition) {
+            case '':
+                return( <Image 
+                    source={this.state.avatarSource} 
+                    style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} /> )
+                break;
+            case 'topleft':
+                return( <Image 
+                    source={this.state.avatarSource} 
+                    style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} />)
+                break;
+            case 'topright':
+                return( <Image 
+                    source={this.state.avatarSource} 
+                    style={{width: 80, height: 80, position:'absolute', top: 20, left: 240}} />)
+            break;
+            case 'bottomleft':
+                return(<Image 
+                    source={this.state.avatarSource} 
+                    style={{width: 80, height: 80, position:'absolute', top: 300, left: 20}} />)
+            break;
+            case 'bottomright':
+                return(<Image 
+                    source={this.state.avatarSource} 
+                    style={{width: 80, height: 80, position:'absolute', top: 300, left: 240}} />)
+            default:
+                alert('please select picture before proced')
+        }}
     }
 
-    
+    done(e){
+        this.refs.viewShot.capture().then(uri => {
+            console.log("do something with ", uri);
+            this.setState({finalImageUrl: uri})
+            this.props.navigation.navigate('ShareAndSave', { imagePath: uri })
+          });
+    }
+
+    // componentDidMount () {
+    //     this.refs.viewShot.capture().then(uri => {
+    //       console.log("do something with ", uri);
+    //     });
+    //   }
     
     render(){
         const {state} = this.props.navigation;
         let imageAdress = state.params.imagePath;
         return(
             <ScrollView contentContainerStyle={styles.contentContainer}>
-            
             <View style={{marginTop: 5}}>
+            <ViewShot ref="viewShot" options={{ format: "jpg", quality: 0.9 }}>              
                 <View style={{position:'relative'}}>
                     <Image
                         style={{width: width, height: height*.7}}
@@ -157,18 +158,13 @@ export default class ShareAndLogo extends Component {
                         onPress={this.selectPosition.bind(this,'bottomright')}
                         style={{position: 'absolute', top: 300, left: 240, padding: 50, width: width*.5, height: 50}}>
                         <Text></Text>
-                    </TouchableHighlight>
-                    
+                    </TouchableHighlight>                   
                     {this.placelogo()}
-
-                    {/* <Image 
-                        source={this.state.avatarSource} 
-                        style={{width: 80, height: 80, position:'absolute', top: 20, left: 20}} /> */}
-                
                 </View>
-                
+                </ViewShot>
+
                 <TouchableOpacity
-                    onPress={this.alr.bind(this)}
+                    onPress={this.slectLogo.bind(this)}
                     style={{alignItems: 'center'}}>
                     <Text style={styles.btn}>Select Logo</Text>
                 </TouchableOpacity>
@@ -178,15 +174,10 @@ export default class ShareAndLogo extends Component {
                     style={{alignItems: 'center'}}>
                     <Text style={styles.btn}>Done</Text>
                 </TouchableOpacity>
-
-                {/* <Canvas ref={this.handleCanvas}/>  */}
             </View>
             </ScrollView>
         )
-
 }}
-
-
 
 const styles = StyleSheet.create({
     btn: {

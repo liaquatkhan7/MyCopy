@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get('window');
 
 export default class Croping extends Component {
     cropingImg(){
-        const {state} = this.props.navigation;
+        const {state} = this.props.navigation; // i think this line is needed now so please check while running the app next time
         let imgAdress = state.params.img 
         ImagePicker.openCropper({
             path: imgAdress,

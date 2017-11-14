@@ -12,19 +12,18 @@ import Main from './component/main.js';
 import Camerarol from './component/camera.js';
 import Croping from './component/cropingimage.js';
 import ShareAndLogo from './component/shareandlogo.js';
-
+import ShareAndSave from './component/shareandsave.js'
 class MainScreenNavigator extends Component {
   constructor(){
     super();
     this.state = {
       toggleSplash: false
-    }
-    setTimeout(() => { this.setState({toggleSplash: true}) }, 
-      3000)
+    };
+    setTimeout(() => { this.setState({toggleSplash: true}) }, 3000);
   }
  
   render(){
-    let display = this.state.toggleSplash
+    let display = this.state.toggleSplash;
     return(
       <View style={styles.center}>
           { !display ? <Splash />  :  <Main navigation={this.props.navigation}/> }
@@ -50,12 +49,11 @@ export const RecNavi = StackNavigator({
     Camerarol: { screen: Camerarol,
       navigationOptions: ({navigation}) => ({
         header: false
-    })
-    },
+    })},
     Croping: { screen: Croping},
-    ShareAndLogo: {screen: ShareAndLogo}
+    ShareAndLogo: {screen: ShareAndLogo},
+    ShareAndSave: { screen: ShareAndSave},
     },
-    
 )
 
 AppRegistry.registerComponent('RecNavi', () => RecNavi)
