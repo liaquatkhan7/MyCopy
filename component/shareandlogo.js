@@ -117,12 +117,6 @@ export default class ShareAndLogo extends Component {
             this.props.navigation.navigate('ShareAndSave', { imagePath: uri })
           });
     }
-
-    // componentDidMount () {
-    //     this.refs.viewShot.capture().then(uri => {
-    //       console.log("do something with ", uri);
-    //     });
-    //   }
     
     render(){
         const {state} = this.props.navigation;
