@@ -63,6 +63,7 @@ export default class Main extends Component {
             multiple: true
           }).then(images => {
             console.log(images);
+            this.props.navigation.navigate('Multiple', {img: images})
           });
     }
     render(){
