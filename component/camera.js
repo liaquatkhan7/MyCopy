@@ -20,7 +20,8 @@ export default class Camerarol extends Component {
                     }}
                     style={styles.preview}
                     aspect={Camera.constants.Aspect.fill}
-                    flashMode={Camera.constants.TorchMode.on}>
+                    flashMode={Camera.constants.FlashMode.auto}
+                    captureTarget={Camera.constants.CaptureTarget.temp}>
                     
                     <TouchableHighlight
                         style={styles.capture}

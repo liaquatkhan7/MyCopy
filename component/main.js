@@ -9,9 +9,9 @@ import {
     Dimensions
 } from 'react-native';
 // import Camera from 'react-native-camera';
+import ImagePicker from 'react-native-image-crop-picker';
 
-var ImagePicker = require('react-native-image-picker');
-
+var ImagePickerr = require('react-native-image-picker');
 const {width, height} = Dimensions.get('window');
 
 var options = {
@@ -32,11 +32,13 @@ export default class Main extends Component {
     }
     
     galaryOpen(){
-        alert('Dude i am connected hip hip hurray')
-        
-        ImagePicker.showImagePicker(options, (response) => {
+        // ImagePicker.openPicker({}).then(image => {
+        //     console.log(image);
+        // });
+
+
+        ImagePickerr.showImagePicker(options, (response) => {
             console.log('Response = ', response);
-          
             if (response.didCancel) {
               console.log('User cancelled image picker');
             }
@@ -51,9 +53,17 @@ export default class Main extends Component {
               this.setState({
                 avatarSource: source
               });
-            //   this.props.navigation.navigate('Croping', { img: source })
+              this.props.navigation.navigate('Croping', { img: source.uri })
             }
         });
+    }
+
+    multiple(){
+        ImagePicker.openPicker({
+            multiple: true
+          }).then(images => {
+            console.log(images);
+          });
     }
     render(){
         // const { navigate } = this.props.navigation;
@@ -78,6 +88,12 @@ export default class Main extends Component {
                         source={require('../asset/galarryicon.png')}
                     />
                     <Text style={styles.take}>SELECT PICTURE</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {this.multiple()} }
+                    style={{width: 150, backgroundColor: 'grey'}}>
+                    <Text style={{textAlign: 'center', color: 'black', padding:20}}>Select Multiple</Text>
                 </TouchableOpacity>
             </View>
         )

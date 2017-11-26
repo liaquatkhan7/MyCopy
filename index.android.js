@@ -12,14 +12,15 @@ import Main from './component/main.js';
 import Camerarol from './component/camera.js';
 import Croping from './component/cropingimage.js';
 import ShareAndLogo from './component/shareandlogo.js';
-import ShareAndSave from './component/shareandsave.js'
+import ShareAndSave from './component/shareandsave.js';
+import Multiple from './component/multiple.js'
 class MainScreenNavigator extends Component {
   constructor(){
     super();
     this.state = {
       toggleSplash: false
     };
-    setTimeout(() => { this.setState({toggleSplash: true}) }, 3000);
+    setTimeout(() => { this.setState({toggleSplash: true}) }, 100);
   }
  
   render(){
@@ -53,6 +54,7 @@ export const RecNavi = StackNavigator({
     Croping: { screen: Croping},
     ShareAndLogo: {screen: ShareAndLogo},
     ShareAndSave: { screen: ShareAndSave},
+    Multiple: { screen: Multiple},
     },
 )
 

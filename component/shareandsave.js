@@ -76,11 +76,10 @@ export default class ShareAndSave extends Component {
                     source={{ uri: imageAdress }} />
                 
                     <TouchableOpacity
-                        style={{flex:1, alignContent:'center'}}
+                        style={{display:'flex', alignItems:'center', marginTop:10}}
                         onPress={this.share.bind(this, imageAdress)}>
-                        <View style={{width: 80, height: 40, backgroundColor:'blue'}}>
-                            <Text
-                                style={{textAlign:'center'}}> SHARE AND SAVE </Text>
+                        <View style={{display:'flex', justifyContent:'center' , width: 200, height: 40, backgroundColor:'#e67e22'}}>
+                            <Text style={{textAlign: 'center', color:'white'}}> SHARE AND SAVE </Text>
                         </View>
                     </TouchableOpacity> 
 
