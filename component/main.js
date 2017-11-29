@@ -62,10 +62,11 @@ export default class Main extends Component {
         ImagePicker.openPicker({
             multiple: true
           }).then(images => {
-            console.log(images);
+            // console.log(images);
             this.props.navigation.navigate('Multiple', {img: images})
           });
     }
+
     render(){
         // const { navigate } = this.props.navigation;
         return (
